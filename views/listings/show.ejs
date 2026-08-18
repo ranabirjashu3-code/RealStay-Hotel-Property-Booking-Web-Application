@@ -1,0 +1,263 @@
+<% layout("/layouts/boilerplate") %>
+
+    <div class="listing-container">
+
+        <div class="listing-card">
+
+            <h3>
+                <%= listing.title %>
+            </h3>
+
+            <p class="desc">
+                <%= listing.description %>
+            </p>
+
+            <div class="detail-row">
+                <strong>Price:</strong>
+                <span>₹ <%= (listing.price ?? 0).toLocaleString("en-IN") %></span>
+            </div>
+
+            <div class="listing-gallery">
+
+                <% listing.images.forEach((image, index)=> { %>
+
+                    <div class="gallery-card">
+
+                        <% if (currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
+
+                            <div class="dropdown image-dropdown">
+
+                                <button class="btn image-menu-btn" type="button" data-bs-toggle="dropdown">
+
+                                    <i class="bi bi-three-dots-vertical"></i>
+
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+
+                                    <li>
+                                        <form action="/listings/<%= listing._id %>/images/<%= index %>?_method=DELETE"
+                                            method="POST">
+
+                                            <button type="submit" class="dropdown-item text-danger">
+
+                                                <i class="bi bi-trash"></i>
+                                                Delete
+
+                                            </button>
+
+                                        </form>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                            <% } %>
+
+                                <img src="<%= image.url %>" class="gallery-images" alt="Listing Image">
+
+                    </div>
+
+                    <% }) %>
+
+                        <!-- Keep Add Photo Card -->
+                        <% if (currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
+
+                            <form id="uploadForm" action="/listings/<%= listing._id %>/images" method="POST"
+                                enctype="multipart/form-data" class="gallery-upload-form">
+
+                                <input type="file" id="images" name="listing[images]" multiple accept="image/*" hidden>
+
+                                <label for="images" class="gallery-card add-photo-card">
+                                    <i class="bi bi-plus-lg"></i>
+                                    <span>Add Photos</span>
+                                </label>
+
+                            </form>
+
+                            <% } %>
+
+            </div>
+
+            <div class="detail-row">
+                <strong>Location:</strong>
+                <span>
+                    <%= listing.location %>
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <strong>Country:</strong>
+                <span>
+                    <%= listing.country %>
+                </span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group">
+                <% if (currUser && listing.owner && currUser._id.equals(listing.owner._id)) { %>
+                    <form action="/listings/<%= listing._id %>/edit" method="GET">
+                        <button class="edit-btn" type="submit">
+                            Edit
+                        </button>
+                    </form>
+
+                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+                        <button class="delete-btn" type="submit">
+                            Delete
+                        </button>
+                    </form>
+                    <% } %>
+            </div>
+
+            <!-- Review Section -->
+            <% if (currUser) { %>
+                <div class="review-section">
+
+                    <h4>Leave a Review</h4>
+
+                    <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate
+                        class="needs-validation">
+
+                        <div class="review-group mb-3">
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">
+                                    Rating
+                                </label>
+                                <fieldset class="starability-coinFlip">
+
+                                    <input type="radio" id="rate1" name="review[rating]" value="1" checked>
+                                    <label for="rate1" title="Poor">1 star</label>
+
+                                    <input type="radio" id="rate2" name="review[rating]" value="2">
+                                    <label for="rate2" title="Fair">2 stars</label>
+
+                                    <input type="radio" id="rate3" name="review[rating]" value="3">
+                                    <label for="rate3" title="Good">3 stars</label>
+
+                                    <input type="radio" id="rate4" name="review[rating]" value="4">
+                                    <label for="rate4" title="Very Good">4 stars</label>
+
+                                    <input type="radio" id="rate5" name="review[rating]" value="5">
+                                    <label for="rate5" title="Amazing">5 stars</label>
+
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="review-group mb-3">
+                            <label for="comment" class="form-label">
+                                Comments
+                            </label>
+
+                            <textarea id="comment" name="review[comment]" placeholder="Write your review here..."
+                                class="form-control" cols="40" rows="5" required></textarea>
+
+                            <div class="invalid-feedback">
+                                Please enter a review comment.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="review-submit">
+                            Submit Review
+                        </button>
+
+                    </form>
+
+                </div><br>
+                <hr>
+                <% } %>
+
+                    <!-- All Reviews -->
+                    <div class="row">
+                        <% for(let review of listing.reviews) { %>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="card review-card h-100">
+
+                                    <div class="card-body">
+
+                                        <div class="d-flex justify-content-between align-items-start">
+
+                                            <h5 class="card-title mb-0">
+
+                                                <% for(let i=1; i<=5; i++){ %>
+
+                                                    <% if(i <=review.rating){ %>
+                                                        <i class="bi bi-star-fill text-warning"></i>
+                                                        <% } else { %>
+                                                            <i class="bi bi-star text-secondary"></i>
+                                                            <% } %>
+
+                                                                <% } %>
+
+                                            </h5>
+                                            <% if (currUser && review.author && review.author._id.equals(currUser._id))
+                                                { %>
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle fs-4" data-bs-toggle="dropdown">
+                                                        ⋮
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="/listings/<%= listing._id %>/reviews/<%= review._id %>/edit">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <form
+                                                                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                                                method="POST">
+                                                                <button type="submit" class="dropdown-item text-danger">
+                                                                    Delete
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <% } %>
+
+                                        </div>
+                                        <div class="user-info">
+                                            <img src="https://i.pinimg.com/originals/02/1b/97/021b970e3a3e67fe6f64f7990bdaae54.jpg"
+                                                class="avatar">
+
+                                            <div>
+                                                <h5 class="card-title mb-0">
+                                                    @<%= review.author ? review.author.username : "Anonymous User" %>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <p class="card-text mt-3">
+                                            <%= review.comment %>
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <% } %>
+                    </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        const imageInput = document.getElementById("images");
+
+        if (imageInput) {
+            imageInput.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    document.getElementById("uploadForm").submit();
+                }
+            });
+        }
+    </script>

@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate") %>
+
+
+    <div class="form-container">
+        <h2>Create your account</h2>
+        <form class="listing-form needs-validation" novalidate action="/signup" method="POST">
+            <div>
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control" id="username" name="username" placeholder="Choose a Username" type="text"
+                    required>
+                <div class="invalid-feedback">
+                    Please enter a username.
+                </div>
+            </div>
+            <div>
+                <label for="email" class="form-label">Email</label>
+                <input class="form-control" id="email" name="email" placeholder="Enter your email address" type="text"
+                    required>
+                <div class="invalid-feedback">
+                    Please enter a email.
+                </div>
+            </div>
+            <div>
+                <label for="password" class="form-label">Password</label>
+                <input class="form-control" id="password" name="password" placeholder="Create a password" type="text"
+                    required>
+                <div class="invalid-feedback">
+                    Please enter a password.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                SignUp
+            </button>
+        </form>
+    </div>

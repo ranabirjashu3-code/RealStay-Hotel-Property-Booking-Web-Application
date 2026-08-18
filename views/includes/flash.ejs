@@ -1,0 +1,39 @@
+<% if (success && success.length) { %>
+
+    <!-- success message -->
+<div class="custom-alert" id="flash-message">
+    <i class="fa-solid fa-circle-check"></i>
+    <span><%= success[0] %></span>
+</div>
+<% } %>
+
+<!-- error message -->
+<% if (error && error.length) { %>
+<div class="error-alert" id="error-flash-message">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <span><%= error[0] %></span>
+</div>
+<% } %>
+
+<script>
+    setTimeout(() => {
+        const flash = document.getElementById("flash-message");
+        if (flash) {
+            flash.classList.add("hide");
+
+            setTimeout(() => {
+                flash.remove();
+            }, 500);
+        }
+    }, 2000);
+    setTimeout(() => {
+        const flash = document.getElementById("error-flash-message");
+        if (flash) {
+            flash.classList.add("hide");
+
+            setTimeout(() => {
+                flash.remove();
+            }, 500);
+        }
+    }, 2000);
+</script>
