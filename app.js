@@ -85,20 +85,28 @@ app.use((req,res,next)=>{
 // });
 
 app.use("/listings", listingRouter);
+
 app.use("/listings/:id/reviews", reviewRouter);
+
 app.use("/", userRouter);
 
-
-app.use((req, res, next) => {
-  next(new ExpressError(404, "Page Not Found!"));
+// Home route
+app.get("/", (req, res) => {
+    res.redirect("/listings");
 });
 
-app.use((err, req, res, next) => {
-  let { statusCode = 500, message = "Something Went Wrong!" } = err;
-  res.render("error.ejs", { message });
+// 404 handler
+app.use((req, res, next) => {
+    next(new ExpressError(404, "Page Not Found!"));
+});
 
+// Error handler
+app.use((err, req, res, next) => {
+    let { statusCode = 500, message = "Something Went Wrong!" } = err;
+
+    res.render("error.ejs", { message });
 });
 
 app.listen(8080, () => {
-  console.log("Server listening on port 8080");
+    console.log("Server listening on port 8080");
 });
