@@ -1,6 +1,9 @@
-if(process.env.NODE_ENV != "production"){
-  require("dotenv").config();
+if (process.env.NODE_ENV != "production") {
+    require("dotenv").config();
 }
+
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const express = require("express");
 const app = express();
