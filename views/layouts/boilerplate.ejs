@@ -13,7 +13,9 @@
   <link rel="stylesheet" href="/css/searchBar.css">
 </head>
 <body>
-   <%- include("../includes/navbar.ejs") %>
+     <% if (showNavbar !== false) { %>
+        <%- include("../includes/navbar.ejs") %>
+    <% } %>
   
     <div class="container">
       <%- include("../includes/flash.ejs") %>
