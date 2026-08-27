@@ -109,3 +109,64 @@ module.exports.deleteImage = async (req, res) => {
 
     res.redirect(`/listings/${id}`);
 };
+
+//Searching
+module.exports.index = async (req, res) => {
+
+    const { search } = req.query;
+
+    let allListings;
+
+    if (search && search.trim() !== "") {
+
+        allListings = await Listing.find({
+            $or: [
+                { title: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } },
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } },
+                {
+                    $expr: {
+                        $regexMatch: {
+                            input: { $toString: "$price" },
+                            regex: search,
+                            options: "i"
+                        }
+                    }
+                }
+            ]
+        });
+
+    } else {
+
+        allListings = await Listing.find({});
+    }
+
+    res.render("listings/index.ejs", { allListings });
+};
+
+
+//sugestions
+module.exports.suggestions = async (req, res) => {
+
+    const { search } = req.query;
+
+    if (!search || search.trim() === "") {
+        return res.json([]);
+    }
+
+    const regex = new RegExp(search.trim(), "i");
+
+    const listings = await Listing.find({
+        $or: [
+            { title: regex },
+            { description: regex },
+            { location: regex },
+            { country: regex }
+        ]
+    })
+    .select("title location country price")
+    .limit(8);
+
+    res.json(listings);
+};

@@ -86,10 +86,15 @@ body {
     box-shadow:none !important;
 }
 
-/* Sticky Navbar Smooth */
-.sticky-top{
+#mainNavbar {
+    transition: transform 0.3s ease-in-out;
     z-index: 1030;
 }
+
+#mainNavbar.navbar-hidden {
+    transform: translateY(-100%);
+}
+
 
 /* Footer */
 .f-info {
@@ -359,6 +364,10 @@ body{
     margin:50px auto;
     width: 100%;
     padding: 1rem;
+}
+.form-container .card {
+    width: 100%;
+    max-width: 600px;
 }
 
 .form-p{

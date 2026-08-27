@@ -1,28 +1,56 @@
 <% layout("/layouts/boilerplate") %>
 
-
     <div class="form-container">
-        <h2>Login to Your Account</h2>
-        <form class="listing-form needs-validation" novalidate action="/login" method="POST">
-            <div>
-                <label for="username" class="form-label">Username</label>
-                <input class="form-control" id="username" name="username" placeholder="Enter your username" type="text"
-                    required>
-                <div class="invalid-feedback">
-                    Please enter a username.
+
+        <div class="card shadow-sm p-4">
+
+            <h2 class="text-center mb-4">Login to Your Account</h2>
+
+            <form class="listing-form needs-validation" novalidate action="/login" method="POST">
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">
+                        Username
+                    </label>
+
+                    <input class="form-control" id="username" name="username" placeholder="Enter your username"
+                        type="text" required>
+
+                    <div class="invalid-feedback">
+                        Please enter a username.
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label for="password" class="form-label">Password</label>
-                <input class="form-control" id="password" name="password" placeholder="Enter your password" type="text"
-                    required>
-                <div class="invalid-feedback">
-                    Please enter a password.
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        Password
+                    </label>
+
+                    <input class="form-control" id="password" name="password" placeholder="Enter your password"
+                        type="password" required>
+
+                    <div class="invalid-feedback">
+                        Please enter a password.
+                    </div>
                 </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Login
+                </button>
+
+            </form>
+
+            <div class="text-center mt-4">
+
+                <div class="text-muted mb-2">
+                    Don't have an account?
+                </div>
+                <a href="/signup" class="btn btn-outline-primary w-75 py-2 fw-semibold rounded-3">
+                    Create an Account
+                </a>
+
             </div>
 
-            <button type="submit" class="btn btn-primary">
-                Login
-            </button>
-        </form>
+        </div>
+
     </div>

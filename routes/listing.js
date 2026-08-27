@@ -26,6 +26,12 @@ router.get(
   "/new",
    isLoggedIn, 
    listingController.renderNewForm);
+   
+//sugestion
+router.get(
+    "/suggestions",
+    wrapAsync(listingController.suggestions)
+);
 
 router
   .route("/:id")

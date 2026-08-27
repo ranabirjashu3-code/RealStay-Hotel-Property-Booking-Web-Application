@@ -112,7 +112,6 @@
             </div>
 
             <!-- Review Section -->
-            <% if (currUser) { %>
                 <div class="review-section">
 
                     <h4>Leave a Review</h4>
@@ -168,8 +167,8 @@
 
                 </div><br>
                 <hr>
-                <% } %>
-
+            
+                
                     <!-- All Reviews -->
                     <div class="row">
                         <% for(let review of listing.reviews) { %>

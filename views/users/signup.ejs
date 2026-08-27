@@ -1,36 +1,87 @@
 <% layout("/layouts/boilerplate") %>
 
+<div class="form-container">
 
-    <div class="form-container">
-        <h2>Create your account</h2>
-        <form class="listing-form needs-validation" novalidate action="/signup" method="POST">
-            <div>
-                <label for="username" class="form-label">Username</label>
-                <input class="form-control" id="username" name="username" placeholder="Choose a Username" type="text"
-                    required>
+    <div class="card shadow-sm p-4">
+
+        <h2 class="text-center mb-4">Create Your Account</h2>
+
+        <form class="listing-form needs-validation"
+              novalidate
+              action="/signup"
+              method="POST">
+
+            <div class="mb-3">
+                <label for="username" class="form-label">
+                    Username
+                </label>
+
+                <input class="form-control"
+                       id="username"
+                       name="username"
+                       placeholder="Choose a username"
+                       type="text"
+                       required>
+
                 <div class="invalid-feedback">
                     Please enter a username.
                 </div>
             </div>
-            <div>
-                <label for="email" class="form-label">Email</label>
-                <input class="form-control" id="email" name="email" placeholder="Enter your email address" type="text"
-                    required>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">
+                    Email
+                </label>
+
+                <input class="form-control"
+                       id="email"
+                       name="email"
+                       placeholder="Enter your email address"
+                       type="email"
+                       required>
+
                 <div class="invalid-feedback">
-                    Please enter a email.
+                    Please enter a valid email address.
                 </div>
             </div>
-            <div>
-                <label for="password" class="form-label">Password</label>
-                <input class="form-control" id="password" name="password" placeholder="Create a password" type="text"
-                    required>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">
+                    Password
+                </label>
+
+                <input class="form-control"
+                       id="password"
+                       name="password"
+                       placeholder="Create a password"
+                       type="password"
+                       required>
+
                 <div class="invalid-feedback">
                     Please enter a password.
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">
-                SignUp
+            <button type="submit"
+                    class="btn btn-primary w-100 py-2 fw-semibold rounded-3">
+                Create Account
             </button>
+
         </form>
+
+        <div class="text-center mt-4">
+
+            <p class="text-muted mb-2">
+                Already have an account?
+            </p>
+
+            <a href="/login"
+               class="btn btn-outline-primary w-75 py-2 fw-semibold rounded-3">
+                Login
+            </a>
+
+        </div>
+
     </div>
+
+</div>

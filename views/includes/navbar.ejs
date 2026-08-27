@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
+<nav id="mainNavbar"
+     class="navbar navbar-expand-md bg-body-tertiary border-bottom fixed-top">
   <div class="container-fluid">
 
     <!-- Logo -->
@@ -21,16 +22,28 @@
           <a class="nav-link" href="/listings"><b>Explore</b></a>
         </li>
       </ul>
+<!-- Searchbar -->
       <div class="search-container">
-        <form class="d-flex search-form" role="search">
-          <input class="form-control search-input" type="search" placeholder="Search destinations..."
-            aria-label="Search" />
+        <form class="d-flex search-form" role="search" action="/listings" method="GET">
+
+          <div class="search-input-wrapper">
+
+            <input class="form-control search-input" type="search" name="search" id="searchInput"
+              placeholder="Search destinations..." autocomplete="off" aria-label="Search">
+
+            <div id="searchSuggestions" class="search-suggestions"></div>
+
+          </div>
+
           <button class="search-btn" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Search</span>
           </button>
+
         </form>
       </div>
+
+
       <!-- Right Side Profile -->
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
@@ -94,3 +107,103 @@
     </div>
   </div>
 </nav>
+
+<script>
+    // =========================
+    // Search Suggestions
+    // =========================
+
+    const searchInput = document.getElementById("searchInput");
+    const suggestionsBox = document.getElementById("searchSuggestions");
+
+    searchInput.addEventListener("input", async () => {
+
+        const search = searchInput.value.trim();
+
+        if (search.length === 0) {
+            suggestionsBox.innerHTML = "";
+            suggestionsBox.style.display = "none";
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `/listings/suggestions?search=${encodeURIComponent(search)}`
+            );
+
+            const listings = await response.json();
+
+            if (listings.length === 0) {
+
+                suggestionsBox.innerHTML = `
+                    <div class="suggestion-item text-muted">
+                        No results found
+                    </div>
+                `;
+
+                suggestionsBox.style.display = "block";
+                return;
+            }
+
+            suggestionsBox.innerHTML = listings.map(listing => `
+                <div class="suggestion-item"
+                     onclick="selectSuggestion('${listing.title.replace(/'/g, "\\'")}')">
+
+                    <div class="fw-semibold">
+                        ${listing.title}
+                    </div>
+
+                    <small class="text-muted">
+                        ${listing.location}, ${listing.country}
+                        · ₹${listing.price}
+                    </small>
+
+                </div>
+            `).join("");
+
+            suggestionsBox.style.display = "block";
+
+        } catch (error) {
+            console.error("Suggestion error:", error);
+        }
+    });
+
+
+    function selectSuggestion(title) {
+
+        searchInput.value = title;
+
+        suggestionsBox.innerHTML = "";
+        suggestionsBox.style.display = "none";
+    }
+
+
+    // =========================
+    // Hide / Show Navbar
+    // =========================
+
+    const navbar = document.getElementById("mainNavbar");
+
+    let lastScrollTop = 0;
+
+    window.addEventListener("scroll", () => {
+
+        const currentScroll =
+            window.pageYOffset ||
+            document.documentElement.scrollTop;
+
+        if (currentScroll > lastScrollTop && currentScroll > 80) {
+
+            // Scrolling down
+            navbar.classList.add("navbar-hidden");
+
+        } else {
+
+            // Scrolling up
+            navbar.classList.remove("navbar-hidden");
+        }
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+</script>
