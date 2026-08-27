@@ -1029,3 +1029,35 @@ body{
 .image-menu-btn i{
     font-size:1.1rem;
 }
+
+.auth-card {
+    width: 100%;
+    max-width: 650px;
+    padding: 1.5rem !important;
+    border: none !important;
+    border-radius: 20px !important;
+}
+
+.auth-logo {
+    font-size: 3rem;
+    color: #ff385c;
+}
+
+.auth-card .listing-form {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.auth-card .listing-form input {
+    margin-bottom: 8px;
+}
+
+.auth-card .listing-form button {
+    padding: 12px;
+    border-radius: 10px;
+}

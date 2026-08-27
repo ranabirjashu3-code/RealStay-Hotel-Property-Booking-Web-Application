@@ -1,58 +1,64 @@
-<% layout("/layouts/boilerplate") %>
-<%
-    showNavbar = false;
-%>
-    <div class="form-container">
+<% showNavbar=false; %>
+    <% layout("/layouts/boilerplate") %>
 
-        <div class="card shadow-sm p-4">
 
-            <h2 class="text-center mb-4">Login to Your Account</h2>
+        <div class="form-container">
 
-            <form class="listing-form needs-validation" novalidate action="/login" method="POST">
+            <div class="card shadow-sm p-3 auth-card">
 
-                <div class="mb-3">
-                    <label for="username" class="form-label">
-                        Username
-                    </label>
+                <div class="text-center mb-3">
+                    <a href="/listings" class="text-decoration-none">
+                        <i class="fa-brands fa-r-project" style="font-size: 3rem; color: #ff385c;"></i>
+                    </a>
+                </div>
 
-                    <input class="form-control" id="username" name="username" placeholder="Enter your username"
-                        type="text" required>
+                <h2 class="text-center mb-4">Login to Your Account</h2>
 
-                    <div class="invalid-feedback">
-                        Please enter a username.
+                <form class="listing-form needs-validation" novalidate action="/login" method="POST">
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">
+                            Username
+                        </label>
+
+                        <input class="form-control" id="username" name="username" placeholder="Enter your username"
+                            type="text" required>
+
+                        <div class="invalid-feedback">
+                            Please enter a username.
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">
-                        Password
-                    </label>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
 
-                    <input class="form-control" id="password" name="password" placeholder="Enter your password"
-                        type="password" required>
+                        <input class="form-control" id="password" name="password" placeholder="Enter your password"
+                            type="password" required>
 
-                    <div class="invalid-feedback">
-                        Please enter a password.
+                        <div class="invalid-feedback">
+                            Please enter a password.
+                        </div>
                     </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold rounded-3">
+                        Login
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-1">
+
+                    <div class="text-muted mb-2">
+                        Don't have an account?
+                    </div>
+                    <a href="/signup" class="btn btn-outline-primary w-75 py-2 fw-semibold rounded-3">
+                        Create an Account
+                    </a>
+
                 </div>
-
-                <button type="submit" class="btn btn-primary w-100">
-                    Login
-                </button>
-
-            </form>
-
-            <div class="text-center mt-4">
-
-                <div class="text-muted mb-2">
-                    Don't have an account?
-                </div>
-                <a href="/signup" class="btn btn-outline-primary w-75 py-2 fw-semibold rounded-3">
-                    Create an Account
-                </a>
 
             </div>
 
         </div>
-
-    </div>
